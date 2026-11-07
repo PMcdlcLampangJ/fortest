@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pad Kra Pao Masterclass Dashboard | สรุป 3 สูตรผัดกะเพรามืออาชีพ</title>
+  
+  <!-- Google Fonts: Prompt & Kanit for elegant Thai typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Tone.js for Web Audio Chimes without external files -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Prompt', 'sans-serif'],
+            display: ['Kanit', 'sans-serif'],
+          },
+          colors: {
+            chili: {
+              400: '#ff6b6b',
+              500: '#ee5253',
+              600: '#d63031',
+              700: '#c0392b'
+            },
+            basil: {
+              400: '#55efc4',
+              500: '#00b894',
+              600: '#10ac84',
+              700: '#0b8f6d'
+            },
+            wok: {
+              800: '#1e2430',
+              850: '#171c26',
+              900: '#0f131a',
+              950: '#090c11'
+            },
+            amberFlame: {
+              400: '#feca57',
+              500: '#ff9f43',
+              600: '#e67e22'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0f131a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #475569;
+    }
+    
+    .glass-card {
+      background: rgba(23, 28, 38, 0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .glass-card-hover:hover {
+      border-color: rgba(238, 82, 83, 0.4);
+      box-shadow: 0 10px 30px -10px rgba(238, 82, 83, 0.2);
+    }
+    .flame-gradient {
+      background: linear-gradient(135deg, #d63031 0%, #ff9f43 100%);
+    }
+    .text-glow {
+      text-shadow: 0 0 20px rgba(238, 82, 83, 0.5);
+    }
+  </style>
+</head>
+<body class="bg-wok-950 text-slate-100 font-sans antialiased min-h-screen selection:bg-chili-500 selection:text-white pb-20">
+
+  <!-- Top Sticky Navigation Bar -->
+  <header class="sticky top-0 z-40 bg-wok-900/90 backdrop-blur-md border-b border-slate-800/80 px-4 sm:px-8 py-3.5 transition-all">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl flame-gradient flex items-center justify-center shadow-lg shadow-chili-600/30">
+          <i class="fa-solid fa-fire text-white text-lg animate-pulse"></i>
+        </div>
+        <div>
+          <h1 class="font-display font-bold text-lg sm:text-xl text-white tracking-wide flex items-center gap-2">
+            กะเพราศาสตร์ <span class="text-xs font-normal px-2 py-0.5 rounded-full bg-chili-600/20 text-chili-400 border border-chili-500/30">Master Dashboard</span>
+          </h1>
+          <p class="text-xs text-slate-400 hidden sm:block">คู่มือทำผัดกะเพรา 3 ตำรับมาตรฐาน ละเอียดระดับครัวมืออาชีพ</p>
+        </div>
+      </div>
+
+      <!-- Quick Actions / Mode toggles -->
+      <div class="flex items-center space-x-2 sm:space-x-4">
+        <!-- View switch buttons -->
+        <div class="flex bg-wok-850 p-1 rounded-xl border border-slate-800 text-xs sm:text-sm">
+          <button id="btn-view-recipes" onclick="switchView('recipes')" class="px-3 py-1.5 rounded-lg font-medium transition flex items-center gap-1.5 bg-chili-600 text-white shadow-sm">
+            <i class="fa-solid fa-utensils"></i> <span class="hidden sm:inline">เจาะลึก 3 สูตร</span>
+          </button>
+          <button id="btn-view-matrix" onclick="switchView('matrix')" class="px-3 py-1.5 rounded-lg font-medium text-slate-400 hover:text-white transition flex items-center gap-1.5">
+            <i class="fa-solid fa-table-columns"></i> <span class="hidden sm:inline">ตารางเทียบสูตร</span>
+          </button>
+        </div>
+
+        <!-- Quick Kitchen Timer Trigger -->
+        <button onclick="toggleTimerDrawer()" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-amberFlame-400 border border-amberFlame-500/30 text-xs sm:text-sm flex items-center gap-2 transition active:scale-95 shadow">
+          <i class="fa-solid fa-stopwatch animate-spin-slow"></i>
+          <span class="font-display font-semibold hidden md:inline">นาฬิกาจับเวลา</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Headline & Summary Stats -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 pt-8 pb-6">
+    <div class="relative overflow-hidden rounded-3xl glass-card p-6 sm:p-10 border border-slate-700/60 shadow-2xl">
+      <!-- Background Ambient Glow -->
+      <div class="absolute -top-24 -right-24 w-80 h-80 bg-chili-600/15 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-24 -left-24 w-80 h-80 bg-basil-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="relative z-10 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+        <div class="max-w-2xl">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-basil-500/10 border border-basil-500/30 text-basil-400 text-xs font-semibold mb-3">
+            <i class="fa-solid fa-leaf text-xs"></i> ศาสตร์แห่งกะเพราแท้ กลิ่นคั่วกระทะ & สัดส่วนสมดุล
+          </div>
+          <h2 class="text-2xl sm:text-4xl font-display font-extrabold text-white tracking-tight leading-snug">
+            3 เอกลักษณ์รสชาติผัดกะเพรา <br class="hidden sm:inline"/>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-chili-400 via-amberFlame-400 to-basil-400">
+              แห้งคั่วโบราณ • ขลุกขลิกคลุกข้าว • ทะเลสมุนไพร
+            </span>
+          </h2>
+          <p class="text-slate-300 mt-2.5 text-sm sm:text-base leading-relaxed">
+            ผัดกะเพราไม่ใช่แค่การผัดเนื้อกับใบไม้ แต่คือวิทยาศาสตร์ของความร้อนระดับควันขึ้น (Smoke Point), การกระจายน้ำมันหอมระเหย และสัมผัสซอสที่เคลือบผิววัตถุดิบอย่างแม่นยำ
+          </p>
+        </div>
+
+        <!-- 3 Quick KPI Metric Cards -->
+        <div class="grid grid-cols-3 gap-3 sm:gap-4 shrink-0">
+          <div class="bg-wok-900/80 p-3.5 sm:p-4 rounded-2xl border border-slate-800 text-center flex flex-col justify-center">
+            <span class="text-xs text-slate-400 uppercase font-medium">สูตรทั้งหมด</span>
+            <span class="text-2xl sm:text-3xl font-display font-bold text-chili-400 mt-1">3</span>
+            <span class="text-[11px] text-slate-400">ระดับภัตตาคาร</span>
+          </div>
+          <div class="bg-wok-900/80 p-3.5 sm:p-4 rounded-2xl border border-slate-800 text-center flex flex-col justify-center">
+            <span class="text-xs text-slate-400 uppercase font-medium">ชนิดพริกที่ใช้</span>
+            <span class="text-2xl sm:text-3xl font-display font-bold text-amberFlame-400 mt-1">4</span>
+            <span class="text-[11px] text-slate-400">จินดา/ขี้หนู/แห้ง/ชี้ฟ้า</span>
+          </div>
+          <div class="bg-wok-900/80 p-3.5 sm:p-4 rounded-2xl border border-slate-800 text-center flex flex-col justify-center">
+            <span class="text-xs text-slate-400 uppercase font-medium">เวลาผัดเฉลี่ย</span>
+            <span class="text-2xl sm:text-3xl font-display font-bold text-basil-400 mt-1">2-3</span>
+            <span class="text-[11px] text-slate-400">นาทีต่อจาน</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content Body -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6">
+
+    <!-- VIEW 1: RECIPES DETAILED VIEW -->
+    <div id="view-recipes" class="space-y-6">
+      
+      <!-- Recipe Selector Tab Pills & Serving Multiplier Bar -->
+      <div class="glass-card p-3 sm:p-4 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-4">
+        <!-- Recipe Selector Tabs -->
+        <div class="flex flex-wrap items-center gap-2 w-full md:w-auto">
+          <button onclick="selectRecipe(0)" id="tab-btn-0" class="recipe-tab flex-1 sm:flex-initial px-4 py-2.5 rounded-xl font-medium text-xs sm:text-sm flex items-center justify-center gap-2 transition bg-chili-600 text-white shadow-md shadow-chili-600/30">
+            <i class="fa-solid fa-drumstick-bite"></i>
+            <span>1. หมูสับแห้งโบราณ</span>
+          </button>
+          <button onclick="selectRecipe(1)" id="tab-btn-1" class="recipe-tab flex-1 sm:flex-initial px-4 py-2.5 rounded-xl font-medium text-xs sm:text-sm flex items-center justify-center gap-2 transition text-slate-300 hover:text-white hover:bg-slate-800/80">
+            <i class="fa-solid fa-bowl-rice"></i>
+            <span>2. เนื้อสับขลุกขลิก</span>
+          </button>
+          <button onclick="selectRecipe(2)" id="tab-btn-2" class="recipe-tab flex-1 sm:flex-initial px-4 py-2.5 rounded-xl font-medium text-xs sm:text-sm flex items-center justify-center gap-2 transition text-slate-300 hover:text-white hover:bg-slate-800/80">
+            <i class="fa-solid fa-shrimp"></i>
+            <span>3. ทะเลรวมมิตรสมุนไพร</span>
+          </button>
+        </div>
+
+        <!-- Serving Size Scaler -->
+        <div class="flex items-center gap-3 bg-wok-900/90 px-4 py-2 rounded-xl border border-slate-700/80 w-full md:w-auto justify-between md:justify-start">
+          <div class="flex items-center gap-2 text-xs sm:text-sm text-slate-300">
+            <i class="fa-solid fa-users text-amberFlame-400"></i>
+            <span>จำนวนเสิร์ฟ:</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <button onclick="changePortion(1)" class="portion-btn w-7 h-7 rounded-lg text-xs font-semibold bg-chili-600 text-white">1</button>
+            <button onclick="changePortion(2)" class="portion-btn w-7 h-7 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300">2</button>
+            <button onclick="changePortion(4)" class="portion-btn w-7 h-7 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300">4</button>
+            <button onclick="changePortion(8)" class="portion-btn w-7 h-7 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300">8</button>
+            <span class="text-xs text-slate-400 ml-1">จาน</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Active Recipe Detail Container -->
+      <div id="recipe-content-panel" class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <!-- Left Column: Summary Card, Ingredients & Seasonings (Cols 1-5) -->
+        <div class="lg:col-span-5 space-y-6">
+          
+          <!-- Recipe Header Card -->
+          <div class="glass-card rounded-2xl p-6 relative overflow-hidden border border-slate-700/70">
+            <div id="recipe-badge-container" class="mb-3">
+              <!-- Injected dynamically -->
+            </div>
+            <h3 id="recipe-title" class="text-2xl font-display font-bold text-white mb-2 leading-tight"></h3>
+            <p id="recipe-tagline" class="text-sm text-slate-300 mb-4 leading-relaxed"></p>
+
+            <!-- Cooking Profile Indicators -->
+            <div class="grid grid-cols-3 gap-2.5 pt-4 border-t border-slate-800">
+              <div class="bg-wok-900/60 p-2.5 rounded-xl border border-slate-800/80 text-center">
+                <span class="text-[11px] text-slate-400 block mb-1">ความเผ็ด</span>
+                <span id="recipe-spice" class="text-xs font-semibold text-chili-400"></span>
+              </div>
+              <div class="bg-wok-900/60 p-2.5 rounded-xl border border-slate-800/80 text-center">
+                <span class="text-[11px] text-slate-400 block mb-1">ลักษณะน้ำผัด</span>
+                <span id="recipe-texture" class="text-xs font-semibold text-amberFlame-400"></span>
+              </div>
+              <div class="bg-wok-900/60 p-2.5 rounded-xl border border-slate-800/80 text-center">
+                <span class="text-[11px] text-slate-400 block mb-1">คู่หูไข่ดาว</span>
+                <span id="recipe-egg" class="text-xs font-semibold text-basil-400"></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ingredients & Measurements with Checklist & Scaling -->
+          <div class="glass-card rounded-2xl p-6 border border-slate-700/70">
+            <div class="flex items-center justify-between mb-4">
+              <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-lg bg-chili-600/20 text-chili-400 flex items-center justify-center text-sm">
+                  <i class="fa-solid fa-basket-shopping"></i>
+                </div>
+                <h4 class="font-display font-semibold text-lg text-white">รายการวัตถุดิบ & สัดส่วน</h4>
+              </div>
+              <span id="current-portion-label" class="text-xs font-medium px-2.5 py-1 rounded-full bg-slate-800 text-amberFlame-400 border border-slate-700">
+                สัดส่วนสำหรับ 1 จาน
+              </span>
+            </div>
+
+            <!-- Category 1: วัตถุดิบหลัก -->
+            <div class="mb-5">
+              <h5 class="text-xs uppercase tracking-wider text-slate-400 font-semibold mb-2 flex items-center gap-1.5">
+                <i class="fa-solid fa-cubes-stacked text-[11px] text-chili-400"></i> วัตถุดิบหลัก
+              </h5>
+              <ul id="list-main-ingredients" class="space-y-2 text-sm text-slate-200">
+                <!-- Injected via JS -->
+              </ul>
+            </div>
+
+            <!-- Category 2: เครื่องพริกแกงสำหรับตำ -->
+            <div class="mb-5">
+              <h5 class="text-xs uppercase tracking-wider text-slate-400 font-semibold mb-2 flex items-center gap-1.5">
+                <i class="fa-solid fa-mortar-pestle text-[11px] text-amberFlame-400"></i> เครื่องพริกแกงสำหรับตำ
+              </h5>
+              <ul id="list-paste-ingredients" class="space-y-2 text-sm text-slate-200">
+                <!-- Injected via JS -->
+              </ul>
+            </div>
+
+            <!-- Category 3: สัดส่วนซอส & เครื่องปรุง -->
+            <div>
+              <h5 class="text-xs uppercase tracking-wider text-slate-400 font-semibold mb-2 flex items-center gap-1.5">
+                <i class="fa-solid fa-flask text-[11px] text-basil-400"></i> สัดส่วนซอสปรุงรส
+              </h5>
+              <ul id="list-sauce-ingredients" class="space-y-2 text-sm text-slate-200">
+                <!-- Injected via JS -->
+              </ul>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-slate-800 flex justify-between items-center text-xs text-slate-400">
+              <span><i class="fa-regular fa-square-check text-basil-400"></i> แตะเพื่อติ๊กเตรียมของ</span>
+              <button onclick="resetIngredientChecks()" class="hover:text-chili-400 transition underline underline-offset-2">รีเซ็ตรายการติ๊ก</button>
+            </div>
+          </div>
+
+          <!-- Secret Pro Tips Card -->
+          <div class="glass-card rounded-2xl p-5 border border-amberFlame-500/30 bg-gradient-to-br from-amberFlame-500/5 to-transparent">
+            <h4 class="font-display font-semibold text-white flex items-center gap-2 mb-2 text-sm sm:text-base">
+              <i class="fa-solid fa-lightbulb text-amberFlame-400"></i>
+              <span>เคล็ดลับเฉพาะสูตร (Chef's Secret Note)</span>
+            </h4>
+            <p id="recipe-secret-tip" class="text-xs sm:text-sm text-slate-300 leading-relaxed"></p>
+          </div>
+
+        </div>
+
+        <!-- Right Column: Step-by-Step Cooking Walkthrough (Cols 6-12) -->
+        <div class="lg:col-span-7 space-y-6">
+          <div class="glass-card rounded-2xl p-6 border border-slate-700/70">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-800 gap-3">
+              <div>
+                <h4 class="font-display font-bold text-xl text-white flex items-center gap-2">
+                  <i class="fa-solid fa-fire-burner text-chili-500"></i> ขั้นตอนการปรุงทีละสเต็ป
+                </h4>
+                <p class="text-xs text-slate-400 mt-0.5">กดติ๊กเมื่อทำแต่ละขั้นตอนเสร็จสิ้น เพื่อไม่พลาดจังหวะความร้อน</p>
+              </div>
+              <div class="flex items-center gap-2 text-xs">
+                <span class="text-slate-400">ความคืบหน้า:</span>
+                <span id="step-progress-text" class="font-semibold text-amberFlame-400 font-display">0%</span>
+              </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="w-full bg-slate-800 h-1.5 rounded-full mt-3 overflow-hidden">
+              <div id="step-progress-bar" class="flame-gradient h-full w-0 transition-all duration-300"></div>
+            </div>
+
+            <!-- Steps List Container -->
+            <div id="recipe-steps-container" class="mt-6 space-y-4">
+              <!-- Dynamically Populated -->
+            </div>
+
+            <!-- Recommended Timer Quick Launcher from Steps -->
+            <div class="mt-8 p-4 rounded-xl bg-wok-900 border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-amberFlame-500/10 text-amberFlame-400 flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-stopwatch text-lg"></i>
+                </div>
+                <div>
+                  <h5 class="text-sm font-semibold text-white">ต้องการจับเวลาจังหวะสำคัญในสูตรนี้?</h5>
+                  <p id="timer-recommendation-text" class="text-xs text-slate-400"></p>
+                </div>
+              </div>
+              <button id="timer-quick-btn" onclick="startRecommendedTimer()" class="w-full sm:w-auto px-4 py-2 rounded-xl flame-gradient text-white font-medium text-xs sm:text-sm hover:opacity-90 transition shadow shrink-0">
+                <i class="fa-solid fa-play mr-1"></i> เริ่มจับเวลาช่วงสำคัญ
+              </button>
+            </div>
+          </div>
+
+          <!-- Heat & Flame Physics Guide for this Recipe -->
+          <div class="glass-card rounded-2xl p-6 border border-slate-700/70">
+            <h4 class="font-display font-semibold text-base text-white mb-3 flex items-center gap-2">
+              <i class="fa-solid fa-gauge-high text-basil-400"></i> วิศวกรรมความร้อน & เทคนิคกระทะ (Wok Physics)
+            </h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm text-slate-300" id="recipe-physics-guide">
+              <!-- Injected dynamically -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 2: RECIPE MATRIX COMPARISON VIEW -->
+    <div id="view-matrix" class="hidden space-y-6">
+      <div class="glass-card p-6 rounded-3xl border border-slate-700">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+          <div>
+            <h3 class="text-2xl font-display font-bold text-white flex items-center gap-2.5">
+              <i class="fa-solid fa-table-list text-chili-400"></i> ตารางเปรียบเทียบเชิงวิเคราะห์ 3 ตำรับ
+            </h3>
+            <p class="text-sm text-slate-400 mt-1">เปรียบเทียบความแตกต่างทางโครงสร้างรสชาติ องค์ประกอบพริก กระเทียม และเทคนิคคุมน้ำมัน</p>
+          </div>
+          <button onclick="switchView('recipes')" class="self-start md:self-auto px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs sm:text-sm flex items-center gap-2 border border-slate-700 transition">
+            <i class="fa-solid fa-arrow-left"></i> กลับไปดูสูตรรายจาน
+          </button>
+        </div>
+
+        <!-- Comparative Table Responsive Container -->
+        <div class="overflow-x-auto rounded-2xl border border-slate-800">
+          <table class="w-full text-left border-collapse text-xs sm:text-sm">
+            <thead>
+              <tr class="bg-wok-900 border-b border-slate-800 text-slate-300">
+                <th class="p-4 font-semibold text-slate-400 w-1/4">คุณลักษณะ (Feature)</th>
+                <th class="p-4 font-bold text-chili-400 border-l border-slate-800/80 bg-chili-500/5">
+                  <div class="flex items-center gap-1.5">
+                    <i class="fa-solid fa-drumstick-bite"></i> 1. หมูสับแห้งโบราณ
+                  </div>
+                </th>
+                <th class="p-4 font-bold text-amberFlame-400 border-l border-slate-800/80 bg-amberFlame-500/5">
+                  <div class="flex items-center gap-1.5">
+                    <i class="fa-solid fa-bowl-rice"></i> 2. เนื้อสับพริกไทยดำขลุกขลิก
+                  </div>
+                </th>
+                <th class="p-4 font-bold text-basil-400 border-l border-slate-800/80 bg-basil-500/5">
+                  <div class="flex items-center gap-1.5">
+                    <i class="fa-solid fa-shrimp"></i> 3. ทะเลรวมมิตรสมุนไพร
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800/60 bg-wok-850/40 text-slate-300">
+              <tr>
+                <td class="p-4 font-medium text-white bg-wok-900/40">สไตล์เนื้อสัมผัส (Texture)</td>
+                <td class="p-4 border-l border-slate-800/80">แห้งสนิท ไร้น้ำเจิ่งนอง ร่วนไม่อมน้ำมัน</td>
+                <td class="p-4 border-l border-slate-800/80">น้ำขลุกขลิกเข้มข้น เนื้อนุ่มชุ่มฉ่ำ</td>
+                <td class="p-4 border-l border-slate-800/80">ซอสเงาเคลือบผิว วัตถุดิบเด้งกรอบ ไม่แฉะ</td>
+              </tr>
+              <tr>
+                <td class="p-4 font-medium text-white bg-wok-900/40">ชนิดพริกที่ผสมผสาน</td>
+                <td class="p-4 border-l border-slate-800/80 text-chili-300">พริกจินดาแดง + พริกขี้หนูสวน + พริกแห้งเม็ดเล็ก</td>
+                <td class="p-4 border-l border-slate-800/80 text-amberFlame-300">พริกขี้หนูสวนสด + พริกไทยดำบุบ + พริกชี้ฟ้า</td>
+                <td class="p-4 border-l border-slate-800/80 text-basil-300">พริกจินดาเขียวแดง + พริกไทยอ่อน + พริกชี้ฟ้า 2 สี</td>
+              </tr>
+              <tr>
+                <td class="p-4 font-medium text-white bg-wok-900/40">ชนิดกระเทียม & สมุนไพรรอง</td>
+                <td class="p-4 border-l border-slate-800/80">กระเทียมไทยกลีบเล็ก โขลกทั้งเปลือก + เกลือ</td>
+                <td class="p-4 border-l border-slate-800/80">กระเทียมไทยผสมกระเทียมจีน</td>
+                <td class="p-4 border-l border-slate-800/80">กระเทียมไทย + หอมแดงไทย + ใบมะกรูดฉีก</td>
+              </tr>
+              <tr>
+                <td class="p-4 font-medium text-white bg-wok-900/40">น้ำมันที่ใช้</td>
+                <td class="p-4 border-l border-slate-800/80">น้ำมันหมูแท้ (ให้กลิ่นโบราณเฉพาะตัว)</td>
+                <td class="p-4 border-l border-slate-800/80">น้ำมันพืชทั่วไป</td>
+                <td class="p-4 border-l border-slate-800/80">น้ำมันรำข้าว (จุดเกิดควันสูง)</td>
+              </tr>
+              <tr>
+                <td class="p-4 font-medium text-white bg-wok-900/40">หัวใจสำคัญของการปรุง</td>
+                <td class="p-4 border-l border-slate-800/80 font-medium text-slate-100">
+                  ราดน้ำปลาที่ **ขอบกระทะร้อนจัด** เพื่อสร้างกลิ่นไหม้หอมคาราเมล
+                </td>
+                <td class="p-4 border-l border-slate-800/80 font-medium text-slate-100">
+                  ผัดเนื้อเพียง 70% ก่อนใส่น้ำสต๊อกเคี่ยวสั้นๆ เนื้อจะไม่กระด้าง
+                </td>
+                <td class="p-4 border-l border-slate-800/80 font-medium text-slate-100">
+                  **ลวกซีฟู้ดในน้ำเดือดจัด 15-20 วินาที** ก่อนผัด ป้องกันน้ำคาวไหล
+                </td>
+              </tr>
+              <tr>
+                <td class="p-4 font-medium text-white bg-wok-900/40">ระดับการใช้ซอสหอยนางรม</td>
+                <td class="p-4 border-l border-slate-800/80">ใส่น้อยมาก (1/2 ชต.) เพื่อไม่ให้แฉะ</td>
+                <td class="p-4 border-l border-slate-800/80">ใส่จัดเต็ม (1.5 ชต.) เพื่อสร้างบอดี้ซอสขลุกขลิก</td>
+                <td class="p-4 border-l border-slate-800/80">ใส่ปานกลาง ผสานเหล้าจีนสร้างความเงา</td>
+              </tr>
+              <tr>
+                <td class="p-4 font-medium text-white bg-wok-900/40">พันธุ์ใบกะเพราที่แนะนำ</td>
+                <td class="p-4 border-l border-slate-800/80 text-basil-400">กะเพราป่าใบเล็ก (กลิ่นฉุน เผ็ดร้อนสูง)</td>
+                <td class="p-4 border-l border-slate-800/80 text-basil-400">กะเพราแดง หรือกะเพราขาวใบขนาดกลาง</td>
+                <td class="p-4 border-l border-slate-800/80 text-basil-400">กะเพราขาวสด ใบหนาเขียวสด</td>
+              </tr>
+              <tr>
+                <td class="p-4 font-medium text-white bg-wok-900/40">ไข่ดาวคู่บารมี</td>
+                <td class="p-4 border-l border-slate-800/80">
+                  <span class="px-2 py-0.5 rounded bg-chili-600/20 text-chili-300 font-medium">ไข่ดาวกรอบฟู ขอบไหม้</span>
+                </td>
+                <td class="p-4 border-l border-slate-800/80">
+                  <span class="px-2 py-0.5 rounded bg-amberFlame-500/20 text-amberFlame-300 font-medium">ไข่ต้มยางมะตูม / ไข่ดาวน้ำ</span>
+                </td>
+                <td class="p-4 border-l border-slate-800/80">
+                  <span class="px-2 py-0.5 rounded bg-basil-500/20 text-basil-300 font-medium">ไข่ดาวเป็ด ขอบกรอบ ไข่แดงเยิ้ม</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Interactive Floating Kitchen Timer Drawer / Modal -->
+  <aside id="timer-drawer" class="fixed bottom-4 right-4 z-50 w-80 sm:w-96 glass-card rounded-2xl p-5 border border-amberFlame-500/40 shadow-2xl transition-all duration-300 translate-y-3 opacity-0 pointer-events-none">
+    <div class="flex items-center justify-between mb-3 border-b border-slate-800 pb-2">
+      <div class="flex items-center gap-2 text-amberFlame-400 font-display font-semibold text-sm">
+        <i class="fa-solid fa-stopwatch animate-pulse"></i>
+        <span>นาฬิกาจับเวลาในครัว (Kitchen Timer)</span>
+      </div>
+      <button onclick="toggleTimerDrawer()" class="text-slate-400 hover:text-white transition">
+        <i class="fa-solid fa-xmark text-sm"></i>
+      </button>
+    </div>
+
+    <!-- Timer Display -->
+    <div class="text-center py-2">
+      <span id="timer-display" class="font-display font-extrabold text-4xl sm:text-5xl tracking-widest text-white drop-shadow">00:20</span>
+      <p id="timer-task-label" class="text-xs text-amberFlame-400 mt-1 font-medium">ลวกอาหารทะเลผ่านน้ำเดือดเร็ว</p>
+    </div>
+
+    <!-- Quick Presets -->
+    <div class="grid grid-cols-3 gap-1.5 mt-3 text-xs">
+      <button onclick="setTimerPreset(15, 'ลวกซีฟู้ดรอบแรก')" class="py-1 px-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300">15 วินาที</button>
+      <button onclick="setTimerPreset(20, 'ลวกอาหารทะเลเต็มที่')" class="py-1 px-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300">20 วินาที</button>
+      <button onclick="setTimerPreset(45, 'ผัดคั่วพริกกระเทียม')" class="py-1 px-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300">45 วินาที</button>
+    </div>
+
+    <!-- Timer Controls -->
+    <div class="flex gap-2 mt-4">
+      <button id="timer-toggle-btn" onclick="toggleTimer()" class="flex-1 py-2 rounded-xl flame-gradient font-display font-semibold text-white text-xs sm:text-sm hover:opacity-90 transition">
+        <i class="fa-solid fa-play mr-1"></i> เริ่มจับเวลา
+      </button>
+      <button onclick="resetTimer()" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs sm:text-sm transition">
+        <i class="fa-solid fa-rotate-right"></i>
+      </button>
+    </div>
+
+    <div class="mt-2 text-center">
+      <label class="inline-flex items-center gap-1.5 text-[11px] text-slate-400 cursor-pointer">
+        <input type="checkbox" id="timer-sound-check" checked class="rounded border-slate-700 text-chili-600 focus:ring-0">
+        <span>ส่งเสียงเตือนเมื่อหมดเวลา (Web Audio Synth)</span>
+      </label>
+    </div>
+  </aside>
+
+  <script>
+    // Master Recipes Data Object
+    const recipesData = [
+      {
+        id: 0,
+        title: "ผัดกะเพราหมูสับแบบแห้งโบราณ",
+        tagline: "สูตรไร้น้ำมันหอยเยอะ ไร้น้ำสต๊อก ดึงกลิ่นไหม้น้ำปลาขอบกระทะและความฉุนจากพริก 3 ชนิด",
+        badge: {
+          label: "สูตรยอดนิยมอันดับ 1",
+          color: "bg-chili-500/10 text-chili-400 border-chili-500/30"
+        },
+        spiceLevel: "เผ็ดจัดจ้านระอุ (พริก 3 ชนิด)",
+        texture: "แห้ง ร่วน ไม่อมน้ำมัน (Wok Hei)",
+        suggestedEgg: "ไข่ดาวกรอบ ขอบฟูเยิ้ม",
+        secretTip: "หัวใจของความแห้งโบราณคือ **ห้ามใส่น้ำเปล่าเด็ดขาด** และตอนใส่ **น้ำปลา ให้ราดขึ้นไปที่ขอบกระทะเหล็กร้อนๆ** เพื่อให้น้ำปลาไหม้กลายเป็นคาราเมลหอมฟุ้งก่อนแล้วค่อยตวัดมารวมกับหมู",
+        timerPreset: {
+          seconds: 15,
+          label: "จังหวะใส่ใบกะเพรา & ผัดปิดท้าย"
+        },
+        physics: [
+          {
+            title: "กระทะเหล็ก & น้ำมันหมู",
+            desc: "น้ำมันหมูมีจุดเกิดควันสูงและไขมันที่ช่วยเคลือบผิวพริกกระเทียมให้เหลืองกรอบส่งกลิ่นหอมแรงกว่าน้ำมันพืชทั่วไป"
+          },
+          {
+            title: "การระเหยความชื้นหมูสับ",
+            desc: "ต้องยีหมูด้วยไฟแรงสูงจนน้ำที่ออกมาจากเนื้อหมูระเหยจนแห้งสนิท เมื่อเนื้อเริ่มเกรียมขอบเล็กน้อยจึงค่อยปรุงรส"
+          }
+        ],
+        mainIngredients: [
+          { name: "หมูสับติดมันเล็กน้อย (สับหยาบ)", baseAmount: 250, unit: "กรัม" },
+          { name: "ใบกะเพราป่า (ล้างผึ่งแห้งสนิท)", baseAmount: 1, unit: "ถ้วยพูน" },
+          { name: "น้ำมันหมูแท้ (หรือน้ำมันพืช)", baseAmount: 1.5, unit: "ช้อนโต๊ะ" }
+        ],
+        pasteIngredients: [
+          { name: "พริกจินดาแดง (ความเผ็ดสด)", baseAmount: 7, unit: "เม็ด" },
+          { name: "พริกขี้หนูสวนสีเขียว-แดง (กลิ่นหอม)", baseAmount: 12, unit: "เม็ด" },
+          { name: "พริกแห้งเม็ดเล็ก (แช่น้ำบีบหมาด)", baseAmount: 6, unit: "เม็ด" },
+          { name: "กระเทียมไทยกลีบเล็ก (โขลกทั้งเปลือก)", baseAmount: 2, unit: "ช้อนโต๊ะ" },
+          { name: "เกลือสมุทรป่น (ใส่ช่วยตำละเอียด)", baseAmount: 0.25, unit: "ช้อนชา" }
+        ],
+        sauceIngredients: [
+          { name: "น้ำปลาแท้เกรดพรีเมียม", baseAmount: 1.5, unit: "ช้อนโต๊ะ" },
+          { name: "ซอสปรุงรสฝาเขียว", baseAmount: 0.5, unit: "ช้อนโต๊ะ" },
+          { name: "ซอสหอยนางรม (เคลือบเงาบางๆ)", baseAmount: 0.5, unit: "ช้อนโต๊ะ" },
+          { name: "ซีอิ๊วดำหวาน (แต่งสีเข้มสวย)", baseAmount: 0.25, unit: "ช้อนชา" },
+          { name: "น้ำตาลทราย (ตัดรสกลมกล่อม)", baseAmount: 0.25, unit: "ช้อนชา" }
+        ],
+        steps: [
+          {
+            stepNum: 1,
+            title: "โขลกเครื่องพริกสามเกลือเผ็ด",
+            desc: "นำพริกแห้ง พริกจินดา พริกขี้หนูสวน กระเทียมไทย และเกลือสมุทรป่น ลงครกหิน โขลกพอหยาบปานกลาง ให้เปลือกกระเทียมและเนื้อพริกแตกปล่อยน้ำมันหอมระเหย"
+          },
+          {
+            stepNum: 2,
+            title: "ผัดคั่วพริกกระเทียมให้ฉุน",
+            desc: "ตั้งกระทะเหล็กด้วยไฟกลาง ใส่น้ำมันหมู พอน้ำมันเริ่มร้อน นำพริกกระเทียมลงไปคั่ว ผัดจนส่งกลิ่นฉุนจาม กระเทียมเริ่มเปลี่ยนเป็นสีเหลืองทอง"
+          },
+          {
+            stepNum: 3,
+            title: "เร่งไฟแรง ยีหมูสับให้ร่วนแห้ง",
+            desc: "เร่งไฟเตาเป็นไฟแรงจัด นำหมูสับหยาบลงกระทะ ใช้ตะหลิวยีหมูให้แผ่ออกไม่จับเป็นก้อน ผัดคั่วจนน้ำในเนื้อหมูแห้งระเหยหมดและหมูสุก 100%"
+          },
+          {
+            stepNum: 4,
+            title: "เทคนิคราดน้ำปลาไหม้รอบขอบกระทะ",
+            desc: "รวนหมูเข้ากับเครื่อง ใส่ซอสปรุงรส ซีอิ๊วดำ ซอสหอยนางรม น้ำตาลทราย จากนั้น 'ราดน้ำปลาลงที่ขอบกระทะเหล็กด้านบน' ให้น้ำปลาฉ่าโดนเหล็กร้อนส่งกลิ่นหอม แล้วรีบตวัดผัดคลุกทันที"
+          },
+          {
+            stepNum: 5,
+            title: "สาดใบกะเพราป่า ปิดไฟเสิร์ฟ",
+            desc: "ใส่ใบกะเพราป่าที่ผึ่งแห้งลงไป ผัดตลบตะหลิวด้วยไฟแรงเพียง 10-15 วินาที พอใบสลดและส่งกลิ่นหอม ปิดไฟตักเสิร์ฟพร้อมไข่ดาวกรอบทันที"
+          }
+        ]
+      },
+      {
+        id: 1,
+        title: "ผัดกะเพราเนื้อสับพริกไทยดำขลุกขลิก",
+        tagline: "เนื้อนุ่มฉ่ำไม่กระด้าง กลิ่นพริกไทยดำบุบ น้ำซอสเข้มข้นรสเค็มหวานมัน เหมาะสำหรับคลุกข้าวสวยร้อนๆ",
+        badge: {
+          label: "สายคลุกข้าวห้ามพลาด",
+          color: "bg-amberFlame-500/10 text-amberFlame-400 border-amberFlame-500/30"
+        },
+        spiceLevel: "เผ็ดร้อนลึก ซ่าพริกไทยดำ",
+        texture: "มีน้ำซอสเคลือบขลุกขลิก ฉ่ำนุ่ม",
+        suggestedEgg: "ไข่ต้มยางมะตูม หรือไข่ดาวน้ำ",
+        secretTip: "เนื้อวัวสุกง่ายและถ้าสุกเกินไปจะเหนียวหยาบ จังหวะสำคัญคือ **ผัดเนื้อให้สุกเพียง 70%** แล้วใส่เครื่องปรุงตามด้วยน้ำสต๊อกทันที การเคี่ยวสั้นๆ ในน้ำซอสจะทำให้เนื้อดูดซึมรสชาติและคงความนุ่มฉ่ำ",
+        timerPreset: {
+          seconds: 30,
+          label: "เคี่ยวน้ำซอสขลุกขลิกงวดตัว"
+        },
+        physics: [
+          {
+            title: "การรักษาความชุ่มฉ่ำของเนื้อวัว",
+            desc: "การเติมน้ำสต๊อกกระดูกวัวเล็กน้อย จะช่วยลดอุณหภูมิผิวเนื้อไม่ให้แข็งกระด้าง และสร้างอิมัลชันกับน้ำมันหอยกลายเป็นซอสเข้มข้น"
+          },
+          {
+            title: "การบุบพริกไทยดำ",
+            desc: "พริกไทยดำต้องบุบพอแตก ไม่บดละเอียดเป็นแป้ง เพื่อให้น้ำมัน Piperine ค่อยๆ แผ่ความเผ็ดร้อนลึกแบบไม่ทำให้ซอสมีรสเฝื่อน"
+          }
+        ],
+        mainIngredients: [
+          { name: "เนื้อวัวสันนอก/น่องลาย (สับหยาบ)", baseAmount: 250, unit: "กรัม" },
+          { name: "ใบกะเพราแดงหรือกะเพราขาว", baseAmount: 1, unit: "ถ้วย" },
+          { name: "น้ำมันพืชสำหรับผัด", baseAmount: 2, unit: "ช้อนโต๊ะ" },
+          { name: "น้ำซุปกระดูกวัวหรือน้ำสะอาด", baseAmount: 3.5, unit: "ช้อนโต๊ะ" }
+        ],
+        pasteIngredients: [
+          { name: "พริกขี้หนูสวนสด", baseAmount: 15, unit: "เม็ด" },
+          { name: "พริกชี้ฟ้าแดง (หั่นแฉลบแต่งสี)", baseAmount: 1, unit: "เม็ด" },
+          { name: "กระเทียมจีนกลีบใหญ่ (ปอกเปลือก)", baseAmount: 1, unit: "ช้อนโต๊ะ" },
+          { name: "กระเทียมไทยกลีบเล็ก", baseAmount: 1, unit: "ช้อนโต๊ะ" },
+          { name: "พริกไทยดำเม็ด (บุบพอแหลก)", baseAmount: 1, unit: "ช้อนชา" }
+        ],
+        sauceIngredients: [
+          { name: "ซอสหอยนางรมเข้มข้น", baseAmount: 1.5, unit: "ช้อนโต๊ะ" },
+          { name: "น้ำปลาแท้", baseAmount: 1, unit: "ช้อนโต๊ะ" },
+          { name: "ซอสปรุงรสฝาเขียว", baseAmount: 1, unit: "ช้อนโต๊ะ" },
+          { name: "ซีอิ๊วดำเค็ม", baseAmount: 0.5, unit: "ช้อนชา" },
+          { name: "น้ำตาลทรายไม่ฟอกสี", baseAmount: 0.5, unit: "ช้อนชา" }
+        ],
+        steps: [
+          {
+            stepNum: 1,
+            title: "โขลกเครื่องพริกกระเทียมพริกไทยดำ",
+            desc: "โขลกพริกขี้หนู กระเทียมจีน และกระเทียมไทยเข้าด้วยกันพอหยาบ จากนั้นใส่พริกไทยดำบุบลงไปคลุกให้เข้ากัน"
+          },
+          {
+            stepNum: 2,
+            title: "ผัดเครื่องให้หอมกรุ่น",
+            desc: "ตั้งกระทะใส่น้ำมันพืช ใช้ไฟกลางค่อนข้างแรง ใส่เครื่องโขลกลงไปผัด ผัดจนพริกกระเทียมเริ่มส่งกลิ่นฉุนหอมและพริกไทยดำเริ่มส่งความร้อน"
+          },
+          {
+            stepNum: 3,
+            title: "ลงเนื้อสับ ผัดสุกเพียง 70%",
+            desc: "เร่งไฟแรง ใส่เนื้อวัวสับลงไป ยีเนื้ออย่างรวดเร็วให้กระจายตัว ผัดจนเนื้อเริ่มเปลี่ยนสีด้านนอกแต่ด้านในยังมีความฉ่ำชมพูอยู่เล็กน้อย"
+          },
+          {
+            stepNum: 4,
+            title: "ปรุงรสและเคี่ยวน้ำซอสขลุกขลิก",
+            desc: "ใส่ซอสหอยนางรม ซอสปรุงรส น้ำปลา ซีอิ๊วดำเค็ม น้ำตาลทราย แล้วเติมน้ำซุปกระดูกวัวลงไป 3-4 ช้อนโต๊ะ ผัดเคี่ยวไฟแรง 20-30 วินาที ให้น้ำซอสงวดเป็นฟองละเอียดเคลือบเนื้อ"
+          },
+          {
+            stepNum: 5,
+            title: "โรยใบกะเพราและพริกชี้ฟ้า",
+            desc: "ใส่พริกชี้ฟ้าแดงหั่นแฉลบและใบกะเพรา ผัดตลบตะหลิวเพียง 3-4 ครั้งพอให้ใบกะเพราโดนไอความร้อน ปิดเตายกลงราดข้าวสวยร้อนๆ ทันที"
+          }
+        ]
+      },
+      {
+        id: 2,
+        title: "ผัดกะเพราทะเลรวมมิตรสมุนไพร",
+        tagline: "กุ้งเด้ง ปลาหมึกกรอบ ปลากะพงเนื้อไม่เละ ไร้กลิ่นคาว ซอสเคลือบเงาวาวด้วยเทคนิคสะดุ้งน้ำเดือด",
+        badge: {
+          label: "เทคนิคภัตตาคารซีฟู้ด",
+          color: "bg-basil-500/10 text-basil-400 border-basil-500/30"
+        },
+        spiceLevel: "เผ็ดสดชื่น หอมสมุนไพรดับคาว",
+        texture: "เนื้อเด้งกรอบ ซอสเคลือบเงา ไร้น้ำนอง",
+        suggestedEgg: "ไข่ดาวเป็ด ขอบกรอบฟู ไข่แดงเยิ้ม",
+        secretTip: "**กฎเหล็กของซีฟู้ดคือการลวกสะดุ้งน้ำเดือด 15-20 วินาที แล้วสะเด็ดน้ำให้แห้งสนิทก่อนลงกระทะ** หากนำอาหารทะเลสดลงผัดตรงๆ น้ำในตัวสัตว์จะไหลออกมาเจิ่งนอง ทำให้รสซอสเจือจางและอาหารทะเลหดเหนียว",
+        timerPreset: {
+          seconds: 20,
+          label: "ลวกซีฟู้ดสะดุ้งน้ำเดือดพล่าน"
+        },
+        physics: [
+          {
+            title: "การลวกโปรตีนซีฟู้ดชั้นนอก (Blanching)",
+            desc: "น้ำเดือดจัดช่วยเซ็ตตัวผิวโปรตีนของกุ้งและหมึก ปิดกั้นไม่ให้น้ำคาวและของเหลวภายในไหลออกมาผสมกับซอสผัดกะเพรา"
+          },
+          {
+            title: "เหล้าจีน & หอมแดงไทย",
+            desc: "หอมแดงช่วยชูความหวานธรรมชาติของสัตว์ทะเล ขณะที่การเหยาะเหล้าจีนรอบขอบกระทะจะระเหยแอลกอฮอล์และดึงกลิ่นคาวออกไปอย่างหมดจด"
+          }
+        ],
+        mainIngredients: [
+          { name: "กุ้งขาวสด (แกะเปลือกผ่าหลัง)", baseAmount: 100, unit: "กรัม (4-5 ตัว)" },
+          { name: "ปลาหมึกกล้วย (บั้งตาราง หั่นชิ้น)", baseAmount: 100, unit: "กรัม" },
+          { name: "เนื้อปลากะพงหรือหอยเชลล์", baseAmount: 50, unit: "กรัม" },
+          { name: "ใบกะเพราสดใบหนา", baseAmount: 1, unit: "ถ้วย" },
+          { name: "พริกไทยอ่อน (ตัดท่อนสั้น)", baseAmount: 1, unit: "ช่อ" },
+          { name: "ใบมะกรูดฉีกเส้น (ดับคาว)", baseAmount: 3, unit: "ใบ" },
+          { name: "น้ำมันรำข้าวสำหรับผัด", baseAmount: 2, unit: "ช้อนโต๊ะ" }
+        ],
+        pasteIngredients: [
+          { name: "พริกจินดาเขียวและแดง", baseAmount: 10, unit: "เม็ด" },
+          { name: "กระเทียมไทยกลีบเล็ก", baseAmount: 1.5, unit: "ช้อนโต๊ะ" },
+          { name: "หอมแดงไทย (ชูความหวานธรรมชาติ)", baseAmount: 1, unit: "หัวเล็ก" },
+          { name: "พริกชี้ฟ้าแดง/เหลือง (หั่นเฉียงแต่งสี)", baseAmount: 1, unit: "เม็ด" }
+        ],
+        sauceIngredients: [
+          { name: "ซอสหอยนางรม", baseAmount: 1.5, unit: "ช้อนโต๊ะ" },
+          { name: "ซอสปรุงรสฝาเขียว", baseAmount: 1, unit: "ช้อนโต๊ะ" },
+          { name: "น้ำปลาแท้", baseAmount: 0.5, unit: "ช้อนโต๊ะ" },
+          { name: "น้ำตาลทราย", baseAmount: 0.5, unit: "ช้อนชา" },
+          { name: "เหล้าจีนทำอาหาร (Shaoxing Wine)", baseAmount: 1, unit: "ช้อนชา" }
+        ],
+        steps: [
+          {
+            stepNum: 1,
+            title: "ลวกสะดุ้งอาหารทะเลในน้ำเดือดจัด (สำคัญที่สุด)",
+            desc: "ต้มน้ำให้เดือดพล่าน ใส่เกลือเล็กน้อย นำกุ้ง ปลาหมึก และปลา ลงไปลวกผ่านน้ำเดือดเร็วๆ เพียง 15-20 วินาที ให้ผิวด้านนอกตึงตัวแล้วตักขึ้นสะเด็ดน้ำทันที"
+          },
+          {
+            stepNum: 2,
+            title: "ผัดเครื่องพริกและสมุนไพรดับคาว",
+            desc: "ตั้งกระทะใส่น้ำมันรำข้าว ใช้ไฟกลาง ใส่พริก กระเทียม หอมแดงที่โขลกไว้ลงไปผัด ตามด้วยพริกไทยอ่อนและใบมะกรูดฉีก ผัดจนส่งกลิ่นหอมระเหยของสมุนไพร"
+          },
+          {
+            stepNum: 3,
+            title: "เร่งไฟแรงจัด เทซีฟู้ดลงผัดรวดเร็ว",
+            desc: "เร่งไฟเตาขึ้นเป็นไฟแรงจัด นำอาหารทะเลที่สะเด็ดน้ำแห้งดีแล้วลงกระทะ ผัดคลุกเคล้ากับเครื่องสมุนไพรอย่างรวดเร็ว"
+          },
+          {
+            stepNum: 4,
+            title: "ปรุงรสเคลือบเงา & สาดเหล้าจีนขอบกระทะ",
+            desc: "ใส่ซอสหอยนางรม ซอสปรุงรส น้ำปลา น้ำตาล และเหยาะเหล้าจีนที่ขอบกระทะ ผัดสะบัดกระทะแรงๆ ภายใน 30-45 วินาที เพื่อให้ซอสเคลือบติดผิวอาหารทะเลทั่วถึงโดยไม่คลายน้ำ"
+          },
+          {
+            stepNum: 5,
+            title: "ใส่ใบกะเพราและพริกชี้ฟ้า ปิดไฟ",
+            desc: "ใส่ใบกะเพราและพริกชี้ฟ้าหั่นเฉียง ผัดตลบตะหลิว 2-3 ครั้งให้ใบสลด ปิดเตายกเสิร์ฟทันที เนื้อสัตว์จะเด้งกรอบ ซอสเงาวาวสวยงาม"
+          }
+        ]
+      }
+    ];
+
+    // State Variables
+    let currentRecipeIndex = 0;
+    let currentPortion = 1;
+    let activeTimer = null;
+    let timerTimeRemaining = 20;
+    let timerRunning = false;
+    let timerInitialTime = 20;
+
+    // Initialize Dashboard
+    window.onload = function() {
+      renderRecipe(0);
+    };
+
+    // Switch between Main Views
+    function switchView(viewName) {
+      const recipesView = document.getElementById('view-recipes');
+      const matrixView = document.getElementById('view-matrix');
+      const btnRecipes = document.getElementById('btn-view-recipes');
+      const btnMatrix = document.getElementById('btn-view-matrix');
+
+      if (viewName === 'recipes') {
+        recipesView.classList.remove('hidden');
+        matrixView.classList.add('hidden');
+        btnRecipes.className = "px-3 py-1.5 rounded-lg font-medium transition flex items-center gap-1.5 bg-chili-600 text-white shadow-sm";
+        btnMatrix.className = "px-3 py-1.5 rounded-lg font-medium text-slate-400 hover:text-white transition flex items-center gap-1.5";
+      } else {
+        recipesView.classList.add('hidden');
+        matrixView.classList.remove('hidden');
+        btnMatrix.className = "px-3 py-1.5 rounded-lg font-medium transition flex items-center gap-1.5 bg-chili-600 text-white shadow-sm";
+        btnRecipes.className = "px-3 py-1.5 rounded-lg font-medium text-slate-400 hover:text-white transition flex items-center gap-1.5";
+      }
+    }
+
+    // Select Recipe Tab
+    function selectRecipe(index) {
+      currentRecipeIndex = index;
+      
+      // Update Tab Styles
+      for (let i = 0; i < 3; i++) {
+        const tabBtn = document.getElementById(`tab-btn-${i}`);
+        if (i === index) {
+          tabBtn.className = "recipe-tab flex-1 sm:flex-initial px-4 py-2.5 rounded-xl font-medium text-xs sm:text-sm flex items-center justify-center gap-2 transition bg-chili-600 text-white shadow-md shadow-chili-600/30";
+        } else {
+          tabBtn.className = "recipe-tab flex-1 sm:flex-initial px-4 py-2.5 rounded-xl font-medium text-xs sm:text-sm flex items-center justify-center gap-2 transition text-slate-300 hover:text-white hover:bg-slate-800/80";
+        }
+      }
+
+      renderRecipe(index);
+    }
+
+    // Change Serving Multiplier
+    function changePortion(size) {
+      currentPortion = size;
+      
+      // Update buttons style
+      const btns = document.querySelectorAll('.portion-btn');
+      btns.forEach(btn => {
+        if (parseInt(btn.innerText) === size) {
+          btn.className = "portion-btn w-7 h-7 rounded-lg text-xs font-semibold bg-chili-600 text-white";
+        } else {
+          btn.className = "portion-btn w-7 h-7 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300";
+        }
+      });
+
+      document.getElementById('current-portion-label').innerText = `สัดส่วนคำนวณสำหรับ ${size} จาน`;
+      renderIngredients();
+    }
+
+    // Render Full Recipe Details
+    function renderRecipe(index) {
+      const data = recipesData[index];
+
+      // Header info
+      document.getElementById('recipe-title').innerText = data.title;
+      document.getElementById('recipe-tagline').innerText = data.tagline;
+      document.getElementById('recipe-spice').innerText = data.spiceLevel;
+      document.getElementById('recipe-texture').innerText = data.texture;
+      document.getElementById('recipe-egg').innerText = data.suggestedEgg;
+      document.getElementById('recipe-secret-tip').innerText = data.secretTip;
+      
+      // Badge
+      document.getElementById('recipe-badge-container').innerHTML = `
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border ${data.badge.color}">
+          <i class="fa-solid fa-award"></i> ${data.badge.label}
+        </span>
+      `;
+
+      // Timer Recommendation Banner
+      document.getElementById('timer-recommendation-text').innerText = `${data.timerPreset.label} (${data.timerPreset.seconds} วินาที)`;
+
+      // Render Ingredients List
+      renderIngredients();
+
+      // Render Steps List
+      renderSteps();
+
+      // Render Wok Physics
+      renderPhysics();
+    }
+
+    // Format scaled amounts cleanly
+    function formatAmount(baseAmount, portion) {
+      const total = baseAmount * portion;
+      if (Number.isInteger(total)) {
+        return total;
+      }
+      // Round to 2 decimal places or fractional representation
+      return parseFloat(total.toFixed(2));
+    }
+
+    // Render Ingredients with Scaling and Checkboxes
+    function renderIngredients() {
+      const data = recipesData[currentRecipeIndex];
+
+      const renderList = (items, targetId) => {
+        const container = document.getElementById(targetId);
+        container.innerHTML = items.map((item, idx) => {
+          const scaledVal = formatAmount(item.baseAmount, currentPortion);
+          const inputId = `${targetId}-check-${idx}`;
+          return `
+            <li class="flex items-center justify-between p-2 rounded-xl hover:bg-slate-800/50 transition cursor-pointer group" onclick="toggleCheckbox('${inputId}')">
+              <label class="flex items-center gap-3 cursor-pointer select-none">
+                <input type="checkbox" id="${inputId}" class="rounded border-slate-700 text-chili-600 focus:ring-0 w-4 h-4 cursor-pointer" onclick="event.stopPropagation()">
+                <span class="text-slate-300 group-hover:text-white transition">${item.name}</span>
+              </label>
+              <span class="font-display font-medium text-amberFlame-400 text-xs sm:text-sm bg-wok-900/80 px-2.5 py-1 rounded-lg border border-slate-800">
+                ${scaledVal} ${item.unit}
+              </span>
+            </li>
+          `;
+        }).join('');
+      };
+
+      renderList(data.mainIngredients, 'list-main-ingredients');
+      renderList(data.pasteIngredients, 'list-paste-ingredients');
+      renderList(data.sauceIngredients, 'list-sauce-ingredients');
+    }
+
+    function toggleCheckbox(id) {
+      const cb = document.getElementById(id);
+      if (cb) {
+        cb.checked = !cb.checked;
+      }
+    }
+
+    function resetIngredientChecks() {
+      const cbs = document.querySelectorAll('#list-main-ingredients input, #list-paste-ingredients input, #list-sauce-ingredients input');
+      cbs.forEach(cb => cb.checked = false);
+    }
+
+    // Render Cooking Steps with Checkable Progress
+    function renderSteps() {
+      const data = recipesData[currentRecipeIndex];
+      const container = document.getElementById('recipe-steps-container');
+
+      container.innerHTML = data.steps.map(s => {
+        return `
+          <div id="step-box-${s.stepNum}" class="p-4 rounded-2xl bg-wok-900/70 border border-slate-800 hover:border-slate-700 transition flex items-start gap-4">
+            <button onclick="toggleStepCompletion(${s.stepNum})" class="step-btn mt-0.5 w-7 h-7 rounded-xl border border-slate-700 bg-slate-800/80 flex items-center justify-center text-xs font-bold text-slate-400 hover:text-white transition shrink-0">
+              ${s.stepNum}
+            </button>
+            <div class="flex-1 cursor-pointer" onclick="toggleStepCompletion(${s.stepNum})">
+              <div class="flex items-center justify-between mb-1">
+                <h5 class="font-display font-semibold text-sm sm:text-base text-white step-title">
+                  ${s.title}
+                </h5>
+                <span class="text-[11px] text-slate-400">Step ${s.stepNum}</span>
+              </div>
+              <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">${s.desc}</p>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      updateStepProgress();
+    }
+
+    function toggleStepCompletion(stepNum) {
+      const box = document.getElementById(`step-box-${stepNum}`);
+      const btn = box.querySelector('.step-btn');
+      
+      if (box.classList.contains('border-basil-500/50')) {
+        // Deselect
+        box.classList.remove('border-basil-500/50', 'bg-basil-500/5');
+        box.classList.add('border-slate-800');
+        btn.innerHTML = `${stepNum}`;
+        btn.className = "step-btn mt-0.5 w-7 h-7 rounded-xl border border-slate-700 bg-slate-800/80 flex items-center justify-center text-xs font-bold text-slate-400 hover:text-white transition shrink-0";
+      } else {
+        // Mark complete
+        box.classList.remove('border-slate-800');
+        box.classList.add('border-basil-500/50', 'bg-basil-500/5');
+        btn.innerHTML = `<i class="fa-solid fa-check text-xs"></i>`;
+        btn.className = "step-btn mt-0.5 w-7 h-7 rounded-xl border border-basil-500 bg-basil-600 flex items-center justify-center text-xs font-bold text-white transition shrink-0 shadow";
+      }
+      updateStepProgress();
+    }
+
+    function updateStepProgress() {
+      const totalSteps = recipesData[currentRecipeIndex].steps.length;
+      const completedSteps = document.querySelectorAll('#recipe-steps-container .border-basil-500\\/50').length;
+      const pct = Math.round((completedSteps / totalSteps) * 100);
+
+      document.getElementById('step-progress-bar').style.width = `${pct}%`;
+      document.getElementById('step-progress-text').innerText = `${pct}% (${completedSteps}/${totalSteps})`;
+    }
+
+    // Render Physics & Heat Guide
+    function renderPhysics() {
+      const data = recipesData[currentRecipeIndex];
+      const container = document.getElementById('recipe-physics-guide');
+      container.innerHTML = data.physics.map(item => `
+        <div class="p-3.5 rounded-xl bg-wok-900/60 border border-slate-800/80">
+          <h5 class="font-display font-semibold text-slate-100 text-xs sm:text-sm mb-1 text-amberFlame-400">
+            ${item.title}
+          </h5>
+          <p class="text-xs text-slate-400 leading-relaxed">${item.desc}</p>
+        </div>
+      `).join('');
+    }
+
+    // Floating Timer Controls
+    function toggleTimerDrawer() {
+      const drawer = document.getElementById('timer-drawer');
+      if (drawer.classList.contains('opacity-0')) {
+        drawer.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-3');
+      } else {
+        drawer.classList.add('opacity-0', 'pointer-events-none', 'translate-y-3');
+      }
+    }
+
+    function setTimerPreset(seconds, label) {
+      pauseTimer();
+      timerInitialTime = seconds;
+      timerTimeRemaining = seconds;
+      document.getElementById('timer-task-label').innerText = label;
+      updateTimerDisplay();
+    }
+
+    function startRecommendedTimer() {
+      const preset = recipesData[currentRecipeIndex].timerPreset;
+      setTimerPreset(preset.seconds, preset.label);
+      
+      const drawer = document.getElementById('timer-drawer');
+      drawer.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-3');
+      
+      startTimer();
+    }
+
+    function updateTimerDisplay() {
+      const mins = Math.floor(timerTimeRemaining / 60);
+      const secs = timerTimeRemaining % 60;
+      document.getElementById('timer-display').innerText = 
+        `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    }
+
+    function toggleTimer() {
+      if (timerRunning) {
+        pauseTimer();
+      } else {
+        startTimer();
+      }
+    }
+
+    function startTimer() {
+      if (timerTimeRemaining <= 0) {
+        timerTimeRemaining = timerInitialTime;
+      }
+      timerRunning = true;
+      document.getElementById('timer-toggle-btn').innerHTML = `<i class="fa-solid fa-pause mr-1"></i> หยุดชั่วคราว`;
+      
+      clearInterval(activeTimer);
+      activeTimer = setInterval(() => {
+        timerTimeRemaining--;
+        updateTimerDisplay();
+        
+        if (timerTimeRemaining <= 0) {
+          clearInterval(activeTimer);
+          timerRunning = false;
+          document.getElementById('timer-toggle-btn').innerHTML = `<i class="fa-solid fa-play mr-1"></i> เริ่มจับเวลา`;
+          playTimerAlarm();
+        }
+      }, 1000);
+    }
+
+    function pauseTimer() {
+      timerRunning = false;
+      clearInterval(activeTimer);
+      document.getElementById('timer-toggle-btn').innerHTML = `<i class="fa-solid fa-play mr-1"></i> ทำต่อ`;
+    }
+
+    function resetTimer() {
+      pauseTimer();
+      timerTimeRemaining = timerInitialTime;
+      updateTimerDisplay();
+    }
+
+    // Play Synth chime using Tone.js without external audio file dependency
+    function playTimerAlarm() {
+      const soundEnabled = document.getElementById('timer-sound-check').checked;
+      if (!soundEnabled) return;
+
+      try {
+        const synth = new Tone.PolySynth(Tone.Synth).toDestination();
+        const now = Tone.now();
+        synth.triggerAttackRelease(["E5", "G#5", "B5", "E6"], "8n", now);
+        synth.triggerAttackRelease(["E5", "G#5", "B5", "E6"], "4n", now + 0.3);
+      } catch (e) {
+        console.log("Audio alert fallback", e);
+      }
+    }
+  </script>
+</body>
+</html>
